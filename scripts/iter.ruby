@@ -1,5 +1,3 @@
-#!/usr/local/bin/ruby
-
 # Iteratively run shell commands from a template
 # -----
 # Given a template such as 'ls {}' this command will repeatedly
