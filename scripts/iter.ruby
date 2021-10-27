@@ -12,6 +12,8 @@ require 'readline'
 template = ARGV.join(' ')
 while true do
   line = Readline.readline("> ", true)
-  system(template.gsub(/{}/, line))
+  command = template.gsub(/{}/, line)
+  puts command
+  system(command)
 end
 
