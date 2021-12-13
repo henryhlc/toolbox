@@ -58,12 +58,47 @@
 (use-package helpful
   :custom
   (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable #'helpful-variable)
+  (counsel-describe-variable-function #'helpful-variable)
   :bind
   ([remap describe-function] . counsel-describe-function)
   ([remap describe-command] . helpful-command)
   ([remap describe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
+
+;; Key-bindings
+(use-package general)
+(use-package hydra)
+
+(use-package evil
+  :after general hydra
+  :config
+  (evil-mode 1)
+  :init
+  (setq evil-want-C-u-scroll t)
+  (general-define-key
+   :keymaps 'evil-normal-state-map
+   "<return>" 'evil-insert)
+  (general-define-key
+   :keymaps 'evil-normal-state-map
+   :prefix "h"
+   "v" 'counsel-describe-variable
+   "f" 'counsel-describe-function
+   "k" 'helpful-key)
+  (defhydra hydra-evil-window (global-map "C-c w")
+    "evil windows"
+    (">" evil-window-increase-width "increase width")
+    ("<" evil-window-decrease-width "decrease width")
+    ("=" evil-balance-windows "balance")
+    ("+" evil-window-increase-height "increase height")
+    ("-" evil-window-decrease-height "decrease height")
+  )
+)
+;; evil-collection?
+
+(use-package magit
+  :after general
+  :init (general-define-key "C-c g" 'magit-status)
+)
 
 ;; Org-roam
 (use-package org-roam
@@ -79,7 +114,7 @@
          ("C-c n j" . org-roam-dailies-capture-today))
   :config
   (org-roam-db-autosync-mode))
-  
+(setq org-roam-v2-ack t)  
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -87,7 +122,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(helpful ivy-rich org-roam which-key rainbow-delimiters counsel use-package ivy)))
+   '(magit hydra general evil helpful ivy-rich org-roam which-key rainbow-delimiters counsel use-package ivy)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
