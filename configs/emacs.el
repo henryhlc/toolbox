@@ -91,6 +91,10 @@
     ("=" evil-balance-windows "balance")
     ("+" evil-window-increase-height "increase height")
     ("-" evil-window-decrease-height "decrease height")
+    ("<left>" evil-window-left "move to left")
+    ("<right>" evil-window-right "move to right")
+    ("<up>" evil-window-up "move to up")
+    ("<down>" evil-window-down "move to down")
   )
 )
 ;; evil-collection?
