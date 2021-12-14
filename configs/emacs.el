@@ -3,8 +3,9 @@
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)
-(scroll-bar-mode 0)
 (tooltip-mode 0)
+(when (display-graphic-p)
+  (scroll-bar-mode 0))
 
 (load-theme 'deeper-blue)
 (set-face-attribute 'default nil :height 160)
@@ -24,6 +25,9 @@
 
 (require 'use-package)
 (setq use-package-always-ensure t)
+
+;; Shell interaction
+(add-to-list 'exec-path "/usr/local/bin")
 
 ;; Search and completion
 (use-package ivy
@@ -52,7 +56,9 @@
   :config (setq which-key-idle-delay 0.8))
 
 (use-package ivy-rich
-  :init (ivy-rich-mode 1))
+  :init
+  (ivy-rich-mode 1)
+  (setq ivy-rich-parse-remote-buffer nil)
 
 ;; Help page
 (use-package helpful
@@ -117,8 +123,10 @@
          ;; Dailies
          ("C-c n j" . org-roam-dailies-capture-today))
   :config
-  (org-roam-db-autosync-mode))
-(setq org-roam-v2-ack t)  
+  (org-roam-db-autosync-mode)
+  :init
+  (setq org-roam-v2-ack t)
+)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
